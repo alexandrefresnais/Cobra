@@ -22,7 +22,16 @@ class Cobra:
     def move(self):
         cur = self.get_head_position()
         x , y = self.direction
-        new = (((cur[0] + (x * GRIDSIZE)) % SCREEN_WIDTH), (cur[1] + (y*GRIDSIZE)) % SCREEN_HEIGHT)
+
+        new_x = (cur[0] + (x * GRIDSIZE))
+        new_y = (cur[1] + (y * GRIDSIZE))
+
+        # Bumping a wall
+        if (new_x < 0 or new_y < 0 or new_x > GRID_WIDTH * GRIDSIZE or new_y > GRID_HEIGHT * GRIDSIZE):
+            self.reset()
+            return
+
+        new = (new_x, new_y)
 
         #If hit itself
         if (len(self.positions) > 2 and new in self.positions[2:]):
