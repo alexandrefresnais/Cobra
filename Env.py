@@ -28,8 +28,6 @@ class Env:
                     pygame.draw.rect(self.surface, (84, 194, 205), r)
 
     def step(self):
-        self.clock.tick(8)
-
         self.snake.handle_keys()
         self.drawGrid()
 

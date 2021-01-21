@@ -13,6 +13,7 @@ def main():
     env = Env()
 
     while (True):
+        env.clock.tick(8)
         env.step()
 
 main()
