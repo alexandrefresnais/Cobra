@@ -63,22 +63,22 @@ class Snake:
         # [4:7] obstacle presence
         # [8:11] snake direction
 
-        state = [0] * 12
+        state = [0] * 8
 
         # if apple not strictly on the right or left of snake
         if not ((self.direction[0] == 0 or self.positions[0][0] == apple.position[0]) and (self.direction[1] == 0 or self.positions[0][1] == apple.position[1])):
             # If above (= in the direction)
-            state[0] = (self.direction[0] == 0 or same_sign(self.direction[0], apple.position[0] - self.positions[0][0])) and (self.direction[1] == 0 or same_sign(self.direction[1], apple.position[1] - self.positions[0][1]))
+            state[0] = 1 if (self.direction[0] == 0 or same_sign(self.direction[0], apple.position[0] - self.positions[0][0])) and (self.direction[1] == 0 or same_sign(self.direction[1], apple.position[1] - self.positions[0][1])) else 0
             # it is behind if not above and if not on same line
-            state[2] = not state[0]
+            state[2] = 1 if not state[0] else 0
 
         r_dir = get_local_right(self.direction)
         # if apple not strictly on above or behind snake
         if not ((r_dir[0] == 0 or self.positions[0][0] == apple.position[0]) and (r_dir[1] == 0 or self.positions[0][1] == apple.position[1])):
             # if on the right of the snake
-            state[1] = (r_dir[0] == 0 or same_sign(r_dir[0], apple.position[0] - self.positions[0][0])) and (r_dir[1] == 0 or same_sign(r_dir[1], apple.position[1] - self.positions[0][1]))
+            state[1] = 1 if (r_dir[0] == 0 or same_sign(r_dir[0], apple.position[0] - self.positions[0][0])) and (r_dir[1] == 0 or same_sign(r_dir[1], apple.position[1] - self.positions[0][1])) else 0
             # it is on left if not on right and if not on same line
-            state[3] = not state[1]
+            state[3] = 1 if not state[1] else 0
 
         # going forward to see if obstable
         tmp = tuple(map(sum, zip(self.positions[0], self.direction))) # Python, i just want to add two tuple please
@@ -98,9 +98,9 @@ class Snake:
             state[7] = 1
 
         # Setting direction
-        state[8] = self.direction == UP
+        """state[8] = self.direction == UP
         state[9] = self.direction == RIGHT
         state[10] = self.direction == DOWN
-        state[11] = self.direction == LEFT
+        state[11] = self.direction == LEFT"""
 
         return state

@@ -42,6 +42,7 @@ class Env:
         died = self.snake.move()
         if died:
             reward = -100
+            self.apple.randomize_position()
         elif self.snake.get_head_position() == self.apple.position:
             self.snake.length += 1
             self.snake.score += 1
@@ -63,4 +64,4 @@ class Env:
         self.screen.blit(text, (5,10))
         pygame.display.update()
 
-        return (state, reward, 1)
+        return (state, reward, died)
