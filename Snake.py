@@ -20,6 +20,7 @@ class Snake:
         else:
             self.direction = point
 
+    # Returns 1 if died from his movement
     def move(self):
         cur = self.get_head_position()
         x , y = self.direction
@@ -30,18 +31,20 @@ class Snake:
         # Bumping a wall
         if new_x < 0 or new_y < 0 or new_x >= GRID_WIDTH or new_y >= GRID_HEIGHT:
             self.reset()
-            return
+            return 1
 
         new = (new_x, new_y)
 
         #If hit itself
         if (len(self.positions) > 2 and new in self.positions[2:]):
             self.reset()
-        else:
-            self.positions.insert(0, new)
-            #this does not apply if apple is eaten
-            if len(self.positions) > self.length:
-                self.positions.pop()
+            return 1
+
+        self.positions.insert(0, new)
+        #this does not apply if apple is eaten
+        if len(self.positions) > self.length:
+            self.positions.pop()
+        return 0
 
     def reset(self):
         self.length = 1
