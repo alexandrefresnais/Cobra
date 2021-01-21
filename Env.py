@@ -21,12 +21,11 @@ class Env:
     def drawGrid(self):
         for y in range(0, int(GRID_HEIGHT)):
             for x in range(0, int(GRID_WIDTH)):
+                r = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE, GRIDSIZE))
                 if (x+y) % 2 == 0:
-                    r = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE, GRIDSIZE))
                     pygame.draw.rect(self.surface, (93, 216, 228), r)
                 else:
-                    rr = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE, GRIDSIZE))
-                    pygame.draw.rect(self.surface, (84, 194, 205), rr)
+                    pygame.draw.rect(self.surface, (84, 194, 205), r)
 
     def step(self):
         self.clock.tick(8)
