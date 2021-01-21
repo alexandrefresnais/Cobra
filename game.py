@@ -27,7 +27,7 @@ class Cobra:
         new_y = (cur[1] + y)
 
         # Bumping a wall
-        if new_x < 0 or new_y < 0 or new_x > GRID_WIDTH or new_y > GRID_HEIGHT:
+        if new_x < 0 or new_y < 0 or new_x >= GRID_WIDTH or new_y >= GRID_HEIGHT:
             self.reset()
             return
 
@@ -75,8 +75,12 @@ class Apple:
         self.color = (223,163,49)
         self.randomize_position()
 
-    def randomize_position(self):
+    def randomize_position(self, snake = None):
         self.position = (random.randint(0, GRID_WIDTH - 1), random.randint(0, GRID_HEIGHT - 1))
+        # while position is taken by a part of snake
+        if snake != None:
+            while self.position in snake.positions:
+                self.position = (random.randint(0, GRID_WIDTH - 1), random.randint(0, GRID_HEIGHT - 1))
 
     def draw(self, surface):
         r = pygame.Rect((self.position[0] * GRIDSIZE, self.position[1] * GRIDSIZE), (GRIDSIZE, GRIDSIZE))
@@ -134,7 +138,10 @@ def main():
         if snake.get_head_position() == food.position:
             snake.length += 1
             snake.score += 1
-            food.randomize_position()
+            food.randomize_position(snake)
+            if snake.length == GRID_WIDTH * GRIDSIZE:
+                # WON
+                snake.reset()
 
         snake.draw(surface)
         food.draw(surface)
