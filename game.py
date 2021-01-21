@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import math
 
 def same_sign(a, b):
     return (a > 0) == (b > 0)
@@ -42,6 +43,10 @@ def add_tuple(a, b):
     res[0] = a[0] + b[0]
     res[1] = a[1] + b[1]
     return res
+
+# Pythagorian distance between two points
+def distance(a, b):
+    return math.sqrt((a[0] - b[0])**2 + (a[1] - b[1])**2)
 
 class Cobra:
     def __init__(self):
@@ -199,7 +204,7 @@ def main():
     drawGrid(surface)
 
     snake = Cobra()
-    food = Apple()
+    apple = Apple()
 
     myfont = pygame.font.SysFont("monospace",16)
 
@@ -209,18 +214,18 @@ def main():
         snake.handle_keys()
         drawGrid(surface)
         snake.move()
-        if snake.get_head_position() == food.position:
+        if snake.get_head_position() == apple.position:
             snake.length += 1
             snake.score += 1
-            food.randomize_position(snake)
+            apple.randomize_position(snake)
             if snake.length == GRID_WIDTH * GRIDSIZE:
                 # WON
                 snake.reset()
 
-        state = snake.get_state(food)
+        state = snake.get_state(apple)
 
         snake.draw(surface)
-        food.draw(surface)
+        apple.draw(surface)
 
 
         screen.blit(surface, (0,0))
