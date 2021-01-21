@@ -1,8 +1,8 @@
 import math
 
 # Nb grid square
-GRID_WIDTH = 12
-GRID_HEIGHT = 12
+GRID_WIDTH = 10
+GRID_HEIGHT = 10
 
 # Absolute size of a grid square
 GRIDSIZE = 20
