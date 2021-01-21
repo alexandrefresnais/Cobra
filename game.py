@@ -5,7 +5,7 @@ import random
 class Cobra:
     def __init__(self):
         self.length = 1
-        self.positions = [((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2)]
+        self.positions = [((GRIDSIZE / 2), GRIDSIZE / 2)]
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.color = (17,24,47)
         self.score = 0
@@ -23,11 +23,11 @@ class Cobra:
         cur = self.get_head_position()
         x , y = self.direction
 
-        new_x = (cur[0] + (x * GRIDSIZE))
-        new_y = (cur[1] + (y * GRIDSIZE))
+        new_x = (cur[0] + x)
+        new_y = (cur[1] + y)
 
         # Bumping a wall
-        if (new_x < 0 or new_y < 0 or new_x > GRID_WIDTH * GRIDSIZE or new_y > GRID_HEIGHT * GRIDSIZE):
+        if new_x < 0 or new_y < 0 or new_x > GRID_WIDTH or new_y > GRID_HEIGHT:
             self.reset()
             return
 
@@ -44,13 +44,13 @@ class Cobra:
 
     def reset(self):
         self.length = 1
-        self.positions = [((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))]
+        self.positions = [((GRIDSIZE / 2), GRIDSIZE / 2)]
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.score = 0
 
     def draw(self, surface):
         for p in self.positions:
-            r = pygame.Rect((p[0], p[1]), (GRIDSIZE, GRIDSIZE))
+            r = pygame.Rect((p[0] * GRIDSIZE, p[1] * GRIDSIZE), (GRIDSIZE, GRIDSIZE))
             pygame.draw.rect(surface, self.color, r)
             pygame.draw.rect(surface, (93,216,228), r, 1)
 
@@ -76,10 +76,10 @@ class Apple:
         self.randomize_position()
 
     def randomize_position(self):
-        self.position = (random.randint(0, GRID_WIDTH - 1) * GRIDSIZE, random.randint(0, GRID_HEIGHT - 1) * GRIDSIZE)
+        self.position = (random.randint(0, GRID_WIDTH - 1), random.randint(0, GRID_HEIGHT - 1))
 
     def draw(self, surface):
-        r = pygame.Rect((self.position[0], self.position[1]), (GRIDSIZE, GRIDSIZE))
+        r = pygame.Rect((self.position[0] * GRIDSIZE, self.position[1] * GRIDSIZE), (GRIDSIZE, GRIDSIZE))
         pygame.draw.rect(surface, self.color, r)
         pygame.draw.rect(surface, (93,216,228), r, 1)
 
