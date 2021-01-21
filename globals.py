@@ -1,3 +1,5 @@
+import math
+
 # Nb grid square
 GRID_WIDTH = 12
 GRID_HEIGHT = 12
