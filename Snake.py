@@ -55,21 +55,6 @@ class Snake:
             pygame.draw.rect(surface, self.color, r)
             pygame.draw.rect(surface, (93,216,228), r, 1)
 
-    def handle_keys(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    self.turn(UP)
-                elif event.key == pygame.K_DOWN:
-                    self.turn(DOWN)
-                elif event.key == pygame.K_LEFT:
-                    self.turn(LEFT)
-                elif event.key == pygame.K_RIGHT:
-                    self.turn(RIGHT)
-
     def get_state(self, apple):
         # [0:3] : apple location relatively to our direction
         # [4:7] obstacle presence
