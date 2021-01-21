@@ -5,7 +5,7 @@ import random
 class Cobra:
     def __init__(self):
         self.length = 1
-        self.positions = [((GRIDSIZE / 2), GRIDSIZE / 2)]
+        self.positions = [((GRID_WIDTH / 2), GRID_HEIGHT / 2)]
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.color = (17,24,47)
         self.score = 0
@@ -44,7 +44,7 @@ class Cobra:
 
     def reset(self):
         self.length = 1
-        self.positions = [((GRIDSIZE / 2), GRIDSIZE / 2)]
+        self.positions = [((GRID_WIDTH / 2), GRID_HEIGHT / 2)]
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.score = 0
 
@@ -94,12 +94,16 @@ def drawGrid(surface):
                 rr = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE, GRIDSIZE))
                 pygame.draw.rect(surface, (84, 194, 205), rr)
 
-SCREEN_WIDTH = 480
-SCREEN_HEIGHT = 480
+# Nb grid square
+GRID_WIDTH = 12
+GRID_HEIGHT = 12
 
+# Absolute size of a grid square
 GRIDSIZE = 20
-GRID_WIDTH = SCREEN_HEIGHT / GRIDSIZE
-GRID_HEIGHT = SCREEN_WIDTH / GRIDSIZE
+
+# Size of window
+SCREEN_WIDTH = GRID_WIDTH * GRIDSIZE
+SCREEN_HEIGHT = GRID_HEIGHT * GRIDSIZE
 
 UP = (0, -1)
 DOWN = (0, 1)
@@ -122,7 +126,7 @@ def main():
     myfont = pygame.font.SysFont("monospace",16)
 
     while (True):
-        clock.tick(10)
+        clock.tick(8)
 
         snake.handle_keys()
         drawGrid(surface)
@@ -131,6 +135,7 @@ def main():
             snake.length += 1
             snake.score += 1
             food.randomize_position()
+
         snake.draw(surface)
         food.draw(surface)
 
