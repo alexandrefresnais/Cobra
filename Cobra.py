@@ -41,13 +41,13 @@ class Cobra:
         samples = random.sample(self.memory, batch_size)
         for sample in samples:
             state, action, reward, new_state, done = sample
-            target = self.target_model.predict(state)
-            if done:
-                target[0][action] = reward
-            else:
-                Q_future = max(self.target_model.predict(new_state)[0])
-                target[0][action] = reward + Q_future * self.gamma
-            self.model.fit(state, target, epochs=1, verbose=0)
+            target = reward
+            if not done:
+                target = reward + self.gamma * np.amax(self.model.predict(new_state)[0])
+            target_f = self.model.predict(state)
+            target_f[0][action] = target
+            self.model.fit(state, target_f, epochs=1, verbose=0)
+
         self.epsilon *= self.epsilon_decay
         self.epsilon = max(self.epsilon_min, self.epsilon)
 

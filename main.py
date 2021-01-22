@@ -58,7 +58,6 @@ def main():
             env.clock.tick(10)
             action = dqn_agent.act(cur_state)
             new_state, reward, done = env.step(action)
-            print(reward)
 
             # reward = reward if not done else -20
             new_state = np.array(new_state).reshape(1,8)
@@ -70,7 +69,7 @@ def main():
                 dqn_agent.replay()
                 dqn_agent.target_train()
                 break
-    print("Game : ", trial)
+        print("Game : ", trial)
     print("done")
 
 main()
