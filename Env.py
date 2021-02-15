@@ -29,7 +29,7 @@ class Env:
                 else:
                     pygame.draw.rect(self.surface, (84, 194, 205), r)
 
-    # Reset game
+    # Reset game and returns a state
     def reset(self):
         self.snake.reset()
         return self.snake.get_state(self.apple)

@@ -16,12 +16,12 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
-# Important : clockwise
-directions = [UP, RIGHT, DOWN, LEFT]
-
 # Returns true if a and b have same signs
 def same_sign(a, b):
     return (a > 0) == (b > 0)
+
+# Important : clockwise
+directions = [UP, RIGHT, DOWN, LEFT]
 
 # Get local right direction from our current direction
 def get_local_right(direction):

@@ -9,6 +9,7 @@ from globals import *
 
 from Env import Env
 from Cobra import Cobra
+from Viper import Viper
 
 # Gets user events
 def handle_actions():
@@ -34,10 +35,22 @@ def play_main():
     env = Env()
 
     while (True):
-        env.clock.tick(8)
+        env.clock.tick(5)
         action = handle_actions()
         env.step(action)
 
+# Main function to see deterministic AI playing
+def viper_main():
+    pygame.init()
+
+    env = Env()
+    viper = Viper()
+
+    cur_state = env.reset()
+    while (True):
+        env.clock.tick(8)
+        action = viper.act(cur_state)
+        cur_state, _ , _ = env.step(directions.index(action))
 
 # Cobra main function
 def cobra_main():
@@ -83,6 +96,8 @@ def main():
     if (len(sys.argv) > 1):
         if (sys.argv[1] == "--play"):
             play_main()
+        if (sys.argv[1] == "--viper"):
+            viper_main()
         else:
             print("Error: Unknown option")
         return
