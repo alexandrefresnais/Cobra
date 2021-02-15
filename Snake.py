@@ -17,11 +17,16 @@ class Snake:
         return self.positions[0]
 
     # Apply direction only if not going back
-    def turn(self, point):
-        if (self.length > 1 and (point[0] * -1, point[1] * -1) == self.direction):
+    def turn(self, dir):
+        # Cannot move behing if len is > 1
+        if dir == DOWN and self.length > 1:
             return
-        else:
-            self.direction = point
+        if dir == RIGHT:
+            self.direction = get_local_right(self.direction)
+        elif dir == LEFT:
+            self.direction = get_local_left(self.direction)
+        elif dir == DOWN:
+            self.direction = get_local_down(self.direction)
 
     # Returns 1 if died from his movement
     # Moves toward his current direction
@@ -86,7 +91,7 @@ class Snake:
             # it is on left if it is not on right and if not on same line
             state[3] = 1 if not state[1] else 0
 
-        # Simuating going forward to see if obstable for each direction
+        # Simulating going forward to see if obstable for each direction
         tmp = tuple(map(sum, zip(self.positions[0], self.direction))) # Python, i just want to add two tuple please
         if tmp[0] < 0 or tmp[1] < 0 or tmp[0] >= GRID_WIDTH or tmp[1] >= GRID_HEIGHT or tmp in self.positions:
             state[4] = 1
