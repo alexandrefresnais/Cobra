@@ -26,21 +26,20 @@ def handle_actions():
                 return 1
     return -1
 
-"""
-def main():
+
+def play_main():
     pygame.init()
 
     env = Env()
 
     while (True):
+        env.clock.tick(8)
         action = handle_actions()
         env.step(action)
 
-main()"""
 
 
-
-def main():
+def cobra_main():
     pygame.init()
 
     env = Env()
@@ -71,5 +70,15 @@ def main():
                 break
         print("Game : ", trial)
     print("done")
+
+def main():
+    if (len(sys.argv) > 1):
+        if (sys.argv[1] == "--play"):
+            play_main()
+        else:
+            print("Error: Unknown option")
+        return
+    # Default : Cobra playing
+    cobra_main()
 
 main()
