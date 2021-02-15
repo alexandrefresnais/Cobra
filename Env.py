@@ -19,6 +19,7 @@ class Env:
         self.myfont = pygame.font.SysFont("monospace",16)
         self.previous_dist = distance(self.snake.get_head_position(), self.apple.position)
 
+    # Draw background grid
     def drawGrid(self):
         for y in range(0, int(GRID_HEIGHT)):
             for x in range(0, int(GRID_WIDTH)):
@@ -28,10 +29,12 @@ class Env:
                 else:
                     pygame.draw.rect(self.surface, (84, 194, 205), r)
 
+    # Reset game
     def reset(self):
         self.snake.reset()
         return self.snake.get_state(self.apple)
 
+    # Apply the action of the snake to the environement
     def step(self, action):
         if (action >= 0 and action <= 3):
             self.snake.turn(directions[action])
@@ -43,7 +46,7 @@ class Env:
         if died:
             reward = -100
             self.apple.randomize_position()
-        elif self.snake.get_head_position() == self.apple.position:
+        elif self.snake.get_head_position() == self.apple.position: # Hit apple
             self.snake.length += 1
             self.snake.score += 1
             self.apple.randomize_position(self.snake)
@@ -54,6 +57,7 @@ class Env:
             reward = 1 if dist < self.previous_dist else -1
             self.previous_dist = dist
 
+        #Gets new state
         state = self.snake.get_state(self.apple)
 
         self.snake.draw(self.surface)

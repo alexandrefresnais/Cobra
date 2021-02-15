@@ -10,6 +10,7 @@ from globals import *
 from Env import Env
 from Cobra import Cobra
 
+# Gets user events
 def handle_actions():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -26,7 +27,7 @@ def handle_actions():
                 return 1
     return -1
 
-
+# Main function to play normal snake with keyboard
 def play_main():
     pygame.init()
 
@@ -38,13 +39,15 @@ def play_main():
         env.step(action)
 
 
-
+# Cobra main function
 def cobra_main():
     pygame.init()
 
     env = Env()
 
+    # How many game
     trials  = 1000
+    # How many max iteration per game
     trial_len = 500
 
     # updateTargetNetwork = 1000
@@ -55,21 +58,26 @@ def cobra_main():
         cur_state = np.array(env.reset()).reshape(1,8)
         for step in range(trial_len):
             env.clock.tick(10)
+            # Get the action from Cobra based on the current state
             action = dqn_agent.act(cur_state)
+
+            # Applying move to environement to get a reward and a new state
             new_state, reward, done = env.step(action)
 
             # reward = reward if not done else -20
             new_state = np.array(new_state).reshape(1,8)
+            # Remember the state, the move and the reward it got.
             dqn_agent.remember(cur_state, action, reward, new_state, done)
 
             cur_state = new_state
             i+=1
+            # If has lost/won
             if done:
                 dqn_agent.replay()
                 dqn_agent.target_train()
                 break
         print("Game : ", trial)
-    print("done")
+    print("Done")
 
 def main():
     if (len(sys.argv) > 1):
