@@ -96,8 +96,10 @@ def main():
     if (len(sys.argv) > 1):
         if (sys.argv[1] == "--play"):
             play_main()
-        if (sys.argv[1] == "--viper"):
+        elif (sys.argv[1] == "--viper"):
             viper_main()
+        elif (sys.argv[1] == "--cobra"):
+            cobra_main()
         else:
             print("Error: Unknown option")
         return
