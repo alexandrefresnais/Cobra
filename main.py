@@ -11,6 +11,15 @@ from Env import Env
 from Cobra import Cobra
 from Viper import Viper
 
+def display_help():
+    print("Welcome to Cobra : the reinforcement learning Snake.")
+    print("Here are the options")
+    print("--play : Manual game of Snake")
+    print("--viper : deterministic AI playing")
+    print("--cobra : Reinforcement Learning AI training & playing")
+    print("-------------------------------------------")
+    print("Authors : Alexandre Fresnais & Thibault Gaillard")
+
 # Gets user events
 def handle_actions():
     for event in pygame.event.get():
@@ -100,6 +109,8 @@ def main():
             viper_main()
         elif (sys.argv[1] == "--cobra"):
             cobra_main()
+        elif (sys.argv[1] == "--help"):
+            display_help()
         else:
             print("Error: Unknown option")
         return
