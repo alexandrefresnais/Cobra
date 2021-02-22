@@ -68,10 +68,9 @@ def cobra_main():
 
     # updateTargetNetwork = 1000
     dqn_agent = Cobra()
-    i = 0
     for trial in range(trials):
         # Does not show game until 200th generation
-        if trial == 5:
+        if trial == 200:
             env.init_pygame()
         cur_state = np.array(env.reset()).reshape(1,8)
         for step in range(trial_len):
@@ -87,7 +86,6 @@ def cobra_main():
             dqn_agent.remember(cur_state, action, reward, new_state, done)
 
             cur_state = new_state
-            i+=1
             # If has lost/won
             if done:
                 dqn_agent.replay()
