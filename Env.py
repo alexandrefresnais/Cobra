@@ -29,6 +29,21 @@ class Env:
                 else:
                     pygame.draw.rect(self.surface, (84, 194, 205), r)
 
+    def draw(self):
+        """
+        Draws every object in the env
+        """
+        self.drawGrid()
+        self.snake.draw(self.surface)
+        self.apple.draw(self.surface)
+
+        #Score
+        self.screen.blit(self.surface, (0,0))
+        text = self.myfont.render("Score {0}".format(self.snake.score), 1, (0,0,0))
+        self.screen.blit(text, (5,10))
+        pygame.display.update()
+
+
     # Reset game and returns a state
     def reset(self):
         self.snake.reset()
@@ -38,7 +53,6 @@ class Env:
     def step(self, action):
         if (action >= 0 and action <= 3):
             self.snake.turn(directions[action])
-        self.drawGrid()
 
         reward = 0
 
@@ -60,12 +74,6 @@ class Env:
         #Gets new state
         state = self.snake.get_state(self.apple)
 
-        self.snake.draw(self.surface)
-        self.apple.draw(self.surface)
-
-        self.screen.blit(self.surface, (0,0))
-        text = self.myfont.render("Score {0}".format(self.snake.score), 1, (0,0,0))
-        self.screen.blit(text, (5,10))
-        pygame.display.update()
+        self.draw()
 
         return (state, reward, died)
