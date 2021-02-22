@@ -6,21 +6,25 @@ from globals import *
 
 class Env:
     def __init__(self):
+        self.init_pygame()
+
+        self.snake = Snake()
+        self.apple = Apple()
+
+        self.previous_dist = distance(self.snake.get_head_position(), self.apple.position)
+
+    def init_pygame(self):
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
         self.surface = pygame.Surface(self.screen.get_size())
         self.surface = self.surface.convert()
-        self.drawGrid()
-
-        self.snake = Snake()
-        self.apple = Apple()
-
         self.myfont = pygame.font.SysFont("monospace",16)
-        self.previous_dist = distance(self.snake.get_head_position(), self.apple.position)
 
-    # Draw background grid
     def drawGrid(self):
+        """
+        Draws background grid
+        """
         for y in range(0, int(GRID_HEIGHT)):
             for x in range(0, int(GRID_WIDTH)):
                 r = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE, GRIDSIZE))
