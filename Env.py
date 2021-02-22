@@ -5,8 +5,10 @@ from Apple import Apple
 from globals import *
 
 class Env:
-    def __init__(self):
-        self.init_pygame()
+    def __init__(self, show=True):
+        self.show = show
+        if show:
+            self.init_pygame()
 
         self.snake = Snake()
         self.apple = Apple()
@@ -14,12 +16,15 @@ class Env:
         self.previous_dist = distance(self.snake.get_head_position(), self.apple.position)
 
     def init_pygame(self):
+        pygame.init()
+
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
         self.surface = pygame.Surface(self.screen.get_size())
         self.surface = self.surface.convert()
         self.myfont = pygame.font.SysFont("monospace",16)
+        self.show = True
 
     def drawGrid(self):
         """
@@ -46,6 +51,8 @@ class Env:
         text = self.myfont.render("Score {0}".format(self.snake.score), 1, (0,0,0))
         self.screen.blit(text, (5,10))
         pygame.display.update()
+
+        self.clock.tick(10)
 
 
     # Reset game and returns a state
@@ -78,6 +85,7 @@ class Env:
         #Gets new state
         state = self.snake.get_state(self.apple)
 
-        self.draw()
+        if self.show:
+            self.draw()
 
         return (state, reward, died)

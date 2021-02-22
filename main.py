@@ -41,33 +41,25 @@ def handle_actions():
 
 # Main function to play normal snake with keyboard
 def play_main():
-    pygame.init()
-
     env = Env()
 
     while (True):
-        env.clock.tick(5)
         action = handle_actions()
         env.step(action)
 
 # Main function to see deterministic AI playing
 def viper_main():
-    pygame.init()
-
     env = Env()
     viper = Viper()
 
     cur_state = env.reset()
     while (True):
-        env.clock.tick(8)
         action = viper.act(cur_state)
         cur_state, _ , _ = env.step(directions.index(action))
 
 # Cobra main function
 def cobra_main():
-    pygame.init()
-
-    env = Env()
+    env = Env(False)
 
     # How many game
     trials  = 1000
@@ -76,12 +68,13 @@ def cobra_main():
 
     # updateTargetNetwork = 1000
     dqn_agent = Cobra()
-    steps = []
     i = 0
     for trial in range(trials):
+        # Does not show game until 200th generation
+        if trial == 5:
+            env.init_pygame()
         cur_state = np.array(env.reset()).reshape(1,8)
         for step in range(trial_len):
-            env.clock.tick(10)
             # Get the action from Cobra based on the current state
             action = dqn_agent.act(cur_state)
 
@@ -100,7 +93,7 @@ def cobra_main():
                 dqn_agent.replay()
                 dqn_agent.target_train()
                 break
-        print("Game : ", trial)
+        print("Game : ", trial, " | Epsilon is ", dqn_agent.epsilon)
     print("Done")
 
 def main():
