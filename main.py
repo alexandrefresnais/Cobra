@@ -58,20 +58,24 @@ def viper_main():
         cur_state, _ , _ = env.step(directions.index(action))
 
 # Cobra main function
-def cobra_main():
+def cobra_main(dqn_agent = Cobra()):
     env = Env(False)
-
     # How many game
-    trials  = 1000
+    trials  = 10
+    nbGames = 10
     # How many max iteration per game
     trial_len = 500
 
     # updateTargetNetwork = 1000
-    dqn_agent = Cobra()
-    for trial in range(trials):
-        # Does not show game until 200th generation
-        if trial == 200:
+    for trial in range(trials + nbGames):
+        # Does not show game until this end of the traning
+        if trial == trials:
+            print("Traning Done")
             env.init_pygame()
+            pygame.event.get()
+            dqn_agent.epsilon = 0
+            print('--- Cobra is playing ---')
+
         cur_state = np.array(env.reset()).reshape(1,8)
         for step in range(trial_len):
             # Get the action from Cobra based on the current state
@@ -82,8 +86,10 @@ def cobra_main():
 
             # reward = reward if not done else -20
             new_state = np.array(new_state).reshape(1,8)
+
             # Remember the state, the move and the reward it got.
             dqn_agent.remember(cur_state, action, reward, new_state, done)
+
 
             cur_state = new_state
             # If has lost/won
@@ -93,6 +99,10 @@ def cobra_main():
                 break
         print("Game : ", trial, " | Epsilon is ", dqn_agent.epsilon)
     print("Done")
+
+
+
+
 
 def main():
     if (len(sys.argv) > 1):
