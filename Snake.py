@@ -11,7 +11,6 @@ class Snake:
         # Random direction at startup
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.color = (17,24,47)
-        self.score = 0
 
     def get_head_position(self):
         return self.positions[0]
@@ -62,7 +61,6 @@ class Snake:
         self.length = 1
         self.positions = [((GRID_WIDTH / 2), GRID_HEIGHT / 2)]
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
-        self.score = 0
 
     def draw(self, surface):
         for p in self.positions:
