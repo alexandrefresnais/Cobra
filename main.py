@@ -71,8 +71,12 @@ def cobra_main(dqn_agent = Cobra(), nb_gens=10, max_action=500, show=True):
     # Nb games played with no random move
     nb_games = 10
 
-    # updateTargetNetwork = 1000
+    # Recording score
+    scores = [0] * nb_gens
+
     for trial in range(nb_gens + nb_games):
+        print("Game : ", trial, " | Epsilon is ", dqn_agent.epsilon)
+
         # Does not show game until this end of the traning
         if trial == nb_gens and show:
             print("Traning Done")
@@ -101,8 +105,10 @@ def cobra_main(dqn_agent = Cobra(), nb_gens=10, max_action=500, show=True):
                 dqn_agent.replay()
                 dqn_agent.target_train()
                 break
-        print("Game : ", trial, " | Epsilon is ", dqn_agent.epsilon)
+        if trial < nb_gens:
+            scores[trial] = env.score
     print("Done")
+    return scores
 
 def main():
     if (len(sys.argv) > 1):
