@@ -13,6 +13,8 @@ class Env:
         self.snake = Snake()
         self.apple = Apple()
 
+        self.score = 0
+
         self.previous_dist = distance(self.snake.get_head_position(), self.apple.position)
 
     def init_pygame(self):
@@ -48,7 +50,7 @@ class Env:
 
         #Score
         self.screen.blit(self.surface, (0,0))
-        text = self.myfont.render("Score {0}".format(self.snake.score), 1, (0,0,0))
+        text = self.myfont.render("Score {0}".format(self.score), 1, (0,0,0))
         self.screen.blit(text, (5,10))
         pygame.display.update()
 
@@ -57,6 +59,7 @@ class Env:
 
     # Reset game and returns a state
     def reset(self):
+        self.score = 0
         self.snake.reset()
         return self.snake.get_state(self.apple)
 
@@ -73,7 +76,7 @@ class Env:
             self.apple.randomize_position()
         elif self.snake.get_head_position() == self.apple.position: # Hit apple
             self.snake.length += 1
-            self.snake.score += 1
+            self.score += 1
             self.apple.randomize_position(self.snake)
             reward = 10
         else:
