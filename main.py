@@ -111,7 +111,7 @@ def main():
         elif (sys.argv[1] == "--viper"):
             viper_main()
         elif (sys.argv[1] == "--cobra"):
-            cobra_main()
+            cobra_main(dqn_agent= Cobra())
         elif (sys.argv[1] == "--help"):
             display_help()
         else:
