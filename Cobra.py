@@ -8,14 +8,15 @@ from collections import deque
 import random
 
 class Cobra :
-    def __init__(self, epsilon_decay = 0.995, learning_rate = 0.001):
+    def __init__(self, epsilon_decay = 0.995, learning_rate = 0.001, batch_size = 32):
+        
         self.memory  = deque(maxlen=2000)
-
         self.gamma = 0.95
         self.epsilon = 1.0
         self.epsilon_min = 0.01
         self.epsilon_decay = epsilon_decay
         self.learning_rate = learning_rate
+        self.batch_size = batch_size
 
         self.model = self.create_model()
         # "hack" implemented by DeepMind to improve convergence
