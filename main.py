@@ -72,7 +72,8 @@ def cobra_main(dqn_agent = Cobra(), nb_gens=10, max_action=500, show=True):
     nb_games = 10
 
     # Recording score
-    scores = [0] * nb_gens
+    gen_scores = [0] * nb_gens
+    real_scores = [0] * nb_games
 
     for trial in range(nb_gens + nb_games):
         print("Game : ", trial, " | Epsilon is ", dqn_agent.epsilon)
@@ -106,9 +107,11 @@ def cobra_main(dqn_agent = Cobra(), nb_gens=10, max_action=500, show=True):
                 dqn_agent.target_train()
                 break
         if trial < nb_gens:
-            scores[trial] = env.score
+            gen_scores[trial] = env.score
+        else :
+            real_scores[trial-nb_gens] = env.score
     print("Done")
-    return scores
+    return gen_scores, real_scores
 
 def main():
     if (len(sys.argv) > 1):
@@ -126,4 +129,5 @@ def main():
     # Default : Cobra playing
     cobra_main()
 
-main()
+if __name__ == "__main__":
+    main()
