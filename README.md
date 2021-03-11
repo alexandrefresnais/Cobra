@@ -32,5 +32,4 @@ python3 main.py --play
 
 # Authors
 
-Alexandre Fresnais
-Thibault Gaillard
+Alexandre Fresnais & Thibault Gaillard
