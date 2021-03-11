@@ -58,7 +58,7 @@ def viper_main():
         cur_state, _ , _ = env.step(directions.index(action))
 
 # Cobra main function
-def cobra_main(dqn_agent = Cobra(), nb_gens=10, max_action=500, show=True):
+def cobra_main(dqn_agent = Cobra(), nb_gens=200, max_action=500, show=True):
     """
     Learns and play Snake
     dqn_agent : Agent with preset
