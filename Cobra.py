@@ -8,7 +8,7 @@ from collections import deque
 import random
 
 class Cobra :
-    def __init__(self, epsilon_decay = 0.995, learning_rate = 0.001, batch_size = 32):
+    def __init__(self, epsilon_decay = 0.93675, learning_rate = 0.00125, batch_size = 96):
         
         self.memory  = deque(maxlen=2000)
         self.gamma = 0.95
