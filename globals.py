@@ -16,13 +16,14 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
-# important : clockwise
-directions = [UP, RIGHT, DOWN, LEFT]
-
+# Returns true if a and b have same signs
 def same_sign(a, b):
     return (a > 0) == (b > 0)
 
-# get local right from our current direction
+# Important : clockwise
+directions = [UP, RIGHT, DOWN, LEFT]
+
+# Get local right direction from our current direction
 def get_local_right(direction):
     i = directions.index(direction) + 1
     return directions[i % 4]
@@ -35,6 +36,7 @@ def get_local_left(direction):
     i = directions.index(direction) + 3
     return directions[i % 4]
 
+# Return a + b with a and b being tuples
 def add_tuple(a, b):
     res = (0, 0)
     res[0] = a[0] + b[0]
