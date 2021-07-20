@@ -5,7 +5,7 @@ Reinforcement Learning Snake
 
 This goal of this project was to make us learn about Deep Q-Learning Networks.
 
-This project was made using pygame and Keras.
+This project was made using pygame and Keras !
 
 # Installation
 
